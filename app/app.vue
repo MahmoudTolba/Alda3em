@@ -13,7 +13,7 @@
       </template>
     </Head>
 
-    <Body class="bg-[#F2F2F2]">
+    <Body class="bg-[#F2F2F2] font-sans">
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
@@ -46,7 +46,7 @@ const title = computed(() => {
     @apply flex-1;
   }
 }
-body {
-  font-family: "GE SS Two", sans-serif;
+:global(body) {
+  font-family: "Tajawal", sans-serif;
 }
 </style>

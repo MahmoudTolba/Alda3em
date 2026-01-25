@@ -59,7 +59,8 @@ export default {
       },
     },
     fontFamily: {
-      ge: ['"GE SS Two"', "sans-serif"],
+      sans: ["Tajawal", "ui-sans-serif", "system-ui", "sans-serif"],
+      tajawal: ["Tajawal", "sans-serif"],
     },
   },
 };

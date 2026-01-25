@@ -17,7 +17,7 @@ export default defineNuxtConfig({
       mode: "out-in",
     },
     head: {
-      title: "جمعية وطنى للاستزراع السمكى",
+      title: "Alda3em-الداعم",
       meta: [
         {
           name: "viewport",
@@ -25,7 +25,7 @@ export default defineNuxtConfig({
         },
         {
           name: "description",
-          content: "جمعية وطنى للاستزراع السمكى",
+          content: "Alda3em-الداعم",
         },
         {
           charset: "utf-8",
@@ -150,7 +150,7 @@ export default defineNuxtConfig({
   },
   googleFonts: {
     families: {
-      "Readex Pro": true,
+      Tajawal: [400, 500, 700],
     },
     display: "swap",
     prefetch: true,
