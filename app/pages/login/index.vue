@@ -138,6 +138,16 @@
     :phone="forgotPhone"
     @verify="verifyResetCode"
   />
+
+  <ResetPasswordModal
+    v-model="isResetPasswordOpen"
+    @submit="submitNewPassword"
+  />
+
+  <SuccessModal
+    v-model="isResetSuccessOpen"
+    title="اعادة تعيين كلمة المرور بنجاح"
+  />
 </template>
 
 <script setup>
@@ -147,6 +157,8 @@ const router = useRouter();
 const isForgotPasswordOpen = ref(false);
 const forgotPhone = ref("");
 const isOtpOpen = ref(false);
+const isResetPasswordOpen = ref(false);
+const isResetSuccessOpen = ref(false);
 
 const handleLogin = () => {
   router.push('/')
@@ -167,5 +179,13 @@ const verifyResetCode = ({ code }) => {
   // TODO: verify OTP with API then allow resetting password
   console.log("OTP code:", code);
   isOtpOpen.value = false;
+  isResetPasswordOpen.value = true;
+};
+
+const submitNewPassword = ({ password, confirmPassword }) => {
+  // TODO: send new password to API
+  console.log("New password:", password, confirmPassword);
+  isResetPasswordOpen.value = false;
+  isResetSuccessOpen.value = true;
 };
 </script>
