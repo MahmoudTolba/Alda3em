@@ -1,0 +1,9 @@
+{
+  "site": {
+    "title": "Rita",
+    "language": "Español"
+  },
+  "common": {
+    "choose_language": "Elige el idioma del sitio"
+  }
+}

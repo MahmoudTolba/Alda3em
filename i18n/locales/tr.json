@@ -1,0 +1,9 @@
+{
+  "site": {
+    "title": "Rita",
+    "language": "Türkçe"
+  },
+  "common": {
+    "choose_language": "Site dilini seçin"
+  }
+}
