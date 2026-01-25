@@ -8,7 +8,7 @@
       aria-haspopup="listbox"
       :aria-expanded="open ? 'true' : 'false'"
     >
-      <img src="/imgs/lang.svg" alt="lang" class="w-4 h-4" />
+      <!-- <img src="/imgs/lang.svg" alt="lang" class="w-4 h-4" /> -->
     </button>
 
     <!-- Dropdown -->
@@ -30,7 +30,7 @@
           class="flex cursor-pointer items-center gap-3 rounded-md px-2 py-2 text-sm hover:bg-gray-100"
           :class="l.code === locale ? 'bg-gray-100' : ''"
         >
-          <img src="/imgs/lang.svg" alt="lang" class="w-4 h-4" />
+          <!-- <img src="/imgs/lang.svg" alt="lang" class="w-4 h-4" /> -->
           <span class="flex-1">{{ l.name }}</span>
           <span v-if="l.code === locale" class="text-primary">✔</span>
         </li>

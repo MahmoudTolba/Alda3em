@@ -153,6 +153,10 @@
 <script setup>
 import { ref } from "vue";
 
+definePageMeta({
+  layout: false,
+});
+
 const router = useRouter();
 const isForgotPasswordOpen = ref(false);
 const forgotPhone = ref("");
