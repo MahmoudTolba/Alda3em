@@ -40,27 +40,109 @@
               م
             </div>
           </div>
-          <div class="relative cursor-pointer">
-            <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-6 h-6 text-gray-400"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+          <div class="relative">
+            <button
+              @click="notificationMenuOpen = !notificationMenuOpen"
+              class="relative cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
-              <path d="M13.73 21a2 2 0 01-3.46 0" />
-            </svg>
+              <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 text-gray-400"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
+                <path d="M13.73 21a2 2 0 01-3.46 0" />
+              </svg>
+            </button>
+
+            <!-- Notification Menu Dropdown -->
+            <div
+              v-if="notificationMenuOpen"
+              ref="notificationMenuRef"
+              class="absolute left-0 top-full mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-lg border border-gray-200 z-50 max-h-96 overflow-hidden flex flex-col"
+              dir="rtl"
+            >
+              <!-- Header -->
+              <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="text-lg font-bold text-gray-800">الإشعارات</h3>
+                <button
+                  @click="markAllAsRead"
+                  class="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  تحديد الكل كمقروء
+                </button>
+              </div>
+
+              <!-- Notifications List -->
+              <div class="overflow-y-auto flex-1">
+                <div v-if="notifications.length === 0" class="p-8 text-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-16 h-16 mx-auto text-gray-300 mb-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                    />
+                  </svg>
+                  <p class="text-gray-500 text-sm">لا توجد إشعارات جديدة</p>
+                </div>
+                <div v-else class="divide-y divide-gray-100">
+                  <div
+                    v-for="notification in notifications"
+                    :key="notification.id"
+                    @click="markAsRead(notification.id)"
+                    class="p-4 hover:bg-gray-50 cursor-pointer transition-colors"
+                    :class="{ 'bg-blue-50': !notification.read }"
+                  >
+                    <div class="flex items-start gap-3">
+                      <div
+                        class="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                        :class="notification.read ? 'bg-transparent' : 'bg-blue-600'"
+                      ></div>
+                      <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-800 mb-1">
+                          {{ notification.title }}
+                        </p>
+                        <p class="text-xs text-gray-500 mb-2">
+                          {{ notification.message }}
+                        </p>
+                        <p class="text-xs text-gray-400">
+                          {{ notification.time }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <div v-if="notifications.length > 0" class="p-4 border-t border-gray-200 text-center">
+                <button
+                  @click="viewAllNotifications"
+                  class="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  عرض جميع الإشعارات
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </header>
 
       <!-- Content -->
-      <div class="flex-1 overflow-y-auto bg-[#FFFBF5]">
+      <div class="flex-1 overflow-y-auto bg-gradient-to-t from-[#FFF8F0] to-white">
         <slot />
       </div>
     </main>
@@ -124,10 +206,98 @@
 <script setup>
 const route = useRoute();
 const sidebarOpen = ref(false);
+const notificationMenuOpen = ref(false);
 
 // Close sidebar on route change (mobile)
 watch(() => route.path, () => {
   sidebarOpen.value = false;
+});
+
+// Notifications data
+const notifications = ref([
+  {
+    id: 1,
+    title: 'طلب جديد',
+    message: 'تم استلام طلب جديد من العميل محمد أحمد',
+    time: 'منذ 5 دقائق',
+    read: false
+  },
+  {
+    id: 2,
+    title: 'تحديث النظام',
+    message: 'تم تحديث النظام بنجاح. جميع الميزات الجديدة متاحة الآن',
+    time: 'منذ ساعة',
+    read: false
+  },
+  {
+    id: 3,
+    title: 'تذكير',
+    message: 'لا تنسى مراجعة التقارير الأسبوعية',
+    time: 'منذ يومين',
+    read: true
+  },
+  {
+    id: 4,
+    title: 'رسالة جديدة',
+    message: 'لديك رسالة جديدة من فريق الدعم',
+    time: 'منذ 3 أيام',
+    read: true
+  }
+]);
+
+// Mark notification as read
+const markAsRead = (id) => {
+  const notification = notifications.value.find(n => n.id === id);
+  if (notification) {
+    notification.read = true;
+  }
+};
+
+// Mark all notifications as read
+const markAllAsRead = () => {
+  notifications.value.forEach(notification => {
+    notification.read = true;
+  });
+};
+
+// View all notifications (you can navigate to a notifications page)
+const viewAllNotifications = () => {
+  notificationMenuOpen.value = false;
+  // TODO: Navigate to notifications page
+  // router.push('/notifications');
+};
+
+// Handle click outside notification menu
+const notificationMenuRef = ref(null);
+
+let clickOutsideHandler = null;
+
+watch(notificationMenuOpen, (isOpen) => {
+  if (process.client) {
+    if (isOpen) {
+      clickOutsideHandler = (event) => {
+        if (notificationMenuRef.value && 
+            !notificationMenuRef.value.contains(event.target) && 
+            !event.target.closest('button')) {
+          notificationMenuOpen.value = false;
+        }
+      };
+      setTimeout(() => {
+        document.addEventListener('click', clickOutsideHandler);
+      }, 0);
+    } else {
+      if (clickOutsideHandler) {
+        document.removeEventListener('click', clickOutsideHandler);
+        clickOutsideHandler = null;
+      }
+    }
+  }
+});
+
+onUnmounted(() => {
+  if (process.client && clickOutsideHandler) {
+    document.removeEventListener('click', clickOutsideHandler);
+  }
 });
 
 const IconDashboard = defineComponent({
@@ -237,7 +407,7 @@ const IconLogout = defineComponent({
 
 const menuItems = [
   { text: "لوحة التحكم", to: "/", icon: IconDashboard },
-  { text: "إدارة المتجر", to: "/store", icon: IconStore },
+  { text: "إدارة المتجر", to: "/storeManagment", icon: IconStore },
   { text: "العروض والخصومات", to: "/offers", icon: IconTag },
   { text: "التحقق من العضوية", to: "/verify", icon: IconCheck },
   { text: "سجل العمليات", to: "/history", icon: IconHistory },

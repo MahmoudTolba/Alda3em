@@ -4,7 +4,7 @@
       <h1 class="text-2xl sm:text-3xl font-bold text-[#0f172a] mb-2">لوحة التحكم</h1>
       <p class="text-sm sm:text-base text-[#64748b]">مرحباً بك، إليك نظرة عامة على أداء متجرك</p>
     </div>
-
+    <!-- start Tabs -->
     <div class="mb-6 sm:mb-8">
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start p-3 sm:p-4 bg-white rounded-xl border border-gray-100 shadow-sm gap-3 sm:gap-0" dir="rtl">
         <span class="text-sm font-medium text-gray-500 sm:ml-4 text-center sm:text-right whitespace-nowrap">
@@ -35,7 +35,9 @@
         </div>
       </div>
     </div>
-
+    <!-- end Tabs -->
+     
+    <!-- start Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         <StatCard
         title="عدد العملاء"
@@ -72,6 +74,7 @@
       />
      
     </div>
+    <!-- end Stats Cards -->
   </div>
 </template>
 
