@@ -1,10 +1,45 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex font-sans" dir="ltr">
+  <div class="h-screen bg-gray-50 flex font-sans overflow-hidden" dir="ltr">
+    <!-- Mobile Sidebar Overlay -->
+    <div
+      v-if="sidebarOpen"
+      class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+      @click="sidebarOpen = false"
+    ></div>
+
     <!-- Main -->
-    <main class="flex-1 min-w-0">
+    <main class="flex-1 min-w-0 flex flex-col overflow-hidden">
       <!-- Header -->
-      <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
-        <div class="flex items-center gap-4">
+      <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-8 flex-shrink-0">
+        <button
+          @click="sidebarOpen = true"
+          class="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6 text-gray-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <div class="flex items-center gap-3 sm:gap-4 flex-1 justify-start">
+          <!-- <LayoutLang customClass="" /> -->
+
+          <div class="flex items-center gap-3">
+            <div class="text-right hidden sm:block">
+              <p class="text-sm font-bold text-gray-800">محمد أحمد</p>
+              <p class="text-xs text-gray-500">مدير المتجر</p>
+            </div>
+            <div
+              class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold"
+            >
+              م
+            </div>
+          </div>
           <div class="relative cursor-pointer">
             <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
             <svg
@@ -21,33 +56,38 @@
               <path d="M13.73 21a2 2 0 01-3.46 0" />
             </svg>
           </div>
-          
-          <LayoutLang customClass="" />
-
-          <div class="flex items-center gap-3">
-            <div class="text-right">
-              <p class="text-sm font-bold text-gray-800">محمد أحمد</p>
-              <p class="text-xs text-gray-500">مدير المتجر</p>
-            </div>
-            <div
-              class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold"
-            >
-              م
-            </div>
-          </div>
         </div>
       </header>
 
       <!-- Content -->
-      <div class="p-8 bg-[#FFFBF5]">
+      <div class="flex-1 overflow-y-auto bg-[#FFFBF5]">
         <slot />
       </div>
     </main>
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-white border-l border-gray-200 flex flex-col">
-      <div class="p-6 flex justify-center">
-        <img src="/imgs/logo-transperant.png" alt="Logo" class=" h-40 object-contain " />
+    <aside
+      :class="[
+        'fixed lg:static inset-y-0 right-0 w-64 bg-white border-l border-gray-200 flex flex-col flex-shrink-0 overflow-hidden z-50 transform transition-transform duration-300 ease-in-out',
+        sidebarOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+      ]"
+    >
+      <div class="p-4 lg:p-6 flex justify-between items-center lg:justify-center">
+        <img src="/imgs/logo-transperant.png" alt="Logo" class="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
+        <button
+          @click="sidebarOpen = false"
+          class="lg:hidden p-2 rounded-lg hover:bg-gray-100 flex-shrink-0"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6 text-gray-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       <nav class="flex-1 px-4 space-y-2 overflow-auto">
@@ -55,25 +95,26 @@
           v-for="item in menuItems"
           :key="item.to"
           :to="item.to"
-          class="flex items-center gap-3 p-3 rounded-lg transition"
+          class="flex flex-row-reverse items-center gap-3 p-3 rounded-lg transition"
           :class="
             route.path === item.to
               ? 'bg-blue-600 text-white'
               : 'text-gray-600 hover:bg-gray-100'
           "
+          @click="sidebarOpen = false"
         >
           <component :is="item.icon" class="w-5 h-5" />
-          <span>{{ item.text }}</span>
+          <span class="flex-1 text-right">{{ item.text }}</span>
         </NuxtLink>
       </nav>
 
       <div class="p-4 border-t border-gray-100">
         <button
           type="button"
-          class="flex items-center gap-3 p-3 text-red-500 w-full hover:bg-red-50 rounded-lg transition"
+          class="flex flex-row-reverse items-center gap-3 p-3 text-red-500 w-full hover:bg-red-50 rounded-lg transition"
         >
           <IconLogout class="w-5 h-5" />
-          <span>تسجيل الخروج</span>
+          <span class="flex-1 text-right">تسجيل الخروج</span>
         </button>
       </div>
     </aside>
@@ -82,6 +123,12 @@
 
 <script setup>
 const route = useRoute();
+const sidebarOpen = ref(false);
+
+// Close sidebar on route change (mobile)
+watch(() => route.path, () => {
+  sidebarOpen.value = false;
+});
 
 const IconDashboard = defineComponent({
   template: `

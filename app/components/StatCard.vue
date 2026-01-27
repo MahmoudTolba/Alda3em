@@ -1,20 +1,26 @@
 <template>
   <div
-    class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between"
+    class="bg-white p-5 sm:p-7 rounded-xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)] border border-gray-100 flex items-start gap-3 sm:gap-4"
+    
   >
-    <div class="text-right flex-1">
-      <p class="text-gray-500 text-sm mb-1">{{ title }}</p>
-      <h3 class="text-3xl font-bold text-gray-800 mb-1">{{ value }}</h3>
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-gray-400">{{ sub }}</span>
-        <span v-if="change" class="text-xs text-green-500 font-bold">{{ change }} ↑</span>
-      </div>
-    </div>
     <div
-      class="w-14 h-14 rounded-xl flex items-center justify-center"
+      class="p-3 sm:p-4 rounded-xl flex items-center justify-center flex-shrink-0"
       :class="iconBgClass"
     >
-      <component :is="iconComponent" class="w-7 h-7" />
+      <component :is="iconComponent" class="w-6 h-6 sm:w-7 sm:h-7" />
+    </div>
+    <div class="text-right flex-1 flex flex-col items-end min-w-0">
+      <p class="text-[#8b93a7] text-sm font-medium mb-1">{{ title }}</p>
+      <h3 class="text-2xl sm:text-3xl font-bold text-[#1e293b] leading-tight">{{ value }}</h3>
+      <div class="flex flex-col items-end gap-1 mt-3 sm:mt-4">
+        <span class="text-[#94a3b8] text-xs font-medium">{{ sub }}</span>
+        <span v-if="change" class="text-[#22c55e] text-sm font-bold flex items-center gap-0.5">
+          {{ change }}
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <path d="M5 15l7-7 7 7" />
+          </svg>
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -27,13 +33,13 @@ const props = defineProps({
   value: { type: String, required: true },
   sub: { type: String, default: "" },
   change: { type: String, default: "" },
-  icon: { type: String, default: "chart" },
+  icon: { type: [String, Object], default: "chart" },
   color: { type: String, default: "blue" },
 });
 
 const iconBgClass = computed(() => {
   const colors = {
-    blue: "bg-blue-50 text-blue-500",
+    blue: "bg-[#eef5ff] text-[#4285f4]",
     green: "bg-green-50 text-green-500",
     purple: "bg-purple-50 text-purple-500",
     orange: "bg-orange-50 text-orange-500",
@@ -42,6 +48,12 @@ const iconBgClass = computed(() => {
 });
 
 const iconComponent = computed(() => {
+  // If icon is already a component, return it directly
+  if (typeof props.icon === 'object' && props.icon !== null) {
+    return props.icon;
+  }
+  
+  // Otherwise, use string-based icon mapping
   const icons = {
     chart: {
       template: `
