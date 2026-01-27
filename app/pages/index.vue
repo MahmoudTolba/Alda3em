@@ -5,27 +5,29 @@
       <p class="text-sm sm:text-base text-[#64748b]">مرحباً بك، إليك نظرة عامة على أداء متجرك</p>
     </div>
 
-    <div class="flex justify-end mb-6 sm:mb-8">
-      <div class="bg-white p-2 sm:p-3 rounded-xl sm:rounded-2xl shadow-sm border border-gray-50 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 sm:gap-5 w-full sm:w-auto" dir="rtl">
-        <span class="text-[#94a3b8] text-xs sm:text-sm font-medium text-center sm:text-right">عرض عمليات التحقق:</span>
-        <div class="flex gap-2 p-1 sm:p-1.5 rounded-lg sm:rounded-xl overflow-x-auto">
+    <div class="mb-6 sm:mb-8">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start p-3 sm:p-4 bg-white rounded-xl border border-gray-100 shadow-sm gap-3 sm:gap-0" dir="rtl">
+        <span class="text-sm font-medium text-gray-500 sm:ml-4 text-center sm:text-right whitespace-nowrap">
+          عرض عمليات التحقق:
+        </span>
+        <div class="flex p-1 rounded-lg gap-1.5 overflow-x-auto sm:overflow-visible -mx-1 sm:mx-0">
           <button
             v-for="tab in tabs"
             :key="tab.text"
             type="button"
-            class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-6 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all whitespace-nowrap flex-shrink-0"
+            class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-all whitespace-nowrap flex-shrink-0"
             :class="
               activeTab === tab.text
-                ? 'bg-[#2564EB] text-white shadow-lg shadow-blue-200 font-bold'
-                : 'bg-gray-50 text-[#374151] hover:bg-gray-50 hover:text-[#374151] font-medium'
+                ? 'bg-[#2564EB] text-white shadow-sm'
+                : 'bg-[#F3F4F6] text-gray-600 hover:bg-gray-100'
             "
             @click="activeTab = tab.text"
           >
             <component 
               :is="tab.icon" 
               :class="[
-                'w-3.5 h-3.5 sm:w-4 sm:h-4',
-                activeTab === tab.text ? 'text-white' : 'text-[#374151]'
+                'h-3.5 w-3.5 sm:h-4 sm:w-4',
+                activeTab === tab.text ? 'text-white' : 'text-gray-600'
               ]"
             />
             <span>{{ tab.text }}</span>
@@ -37,34 +39,34 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         <StatCard
         title="عدد العملاء"
-        value="1,247"
-        sub="استخدموا الخصم هذا الشهر"
-        change="+12.5%"
+        :value="statsData.customers.value"
+        :sub="statsData.customers.sub"
+        :change="statsData.customers.change"
         :icon="IconUser"
         color="blue"
       />
       <StatCard
         title="عمليات التحقق"
-        value="127"
-        sub="عمليات اليوم"
-        change="+15.3%"
+        :value="statsData.verifications.value"
+        :sub="statsData.verifications.sub"
+        :change="statsData.verifications.change"
         :icon="IconShieldCheck"
         color="blue"
       />
       <StatCard
         title="العروض الفعالة"
-        value="24"
-        sub="عرض نشط حالياً"
-        change="+3"
+        :value="statsData.offers.value"
+        :sub="statsData.offers.sub"
+        :change="statsData.offers.change"
         :icon="IconTag"
         color="blue"
       />
     
       <StatCard
         title="متوسط التقييم"
-        value="4.8"
-        sub="من أصل 5 نجوم"
-        change="+0.31"
+        :value="statsData.rating.value"
+        :sub="statsData.rating.sub"
+        :change="statsData.rating.change"
         :icon="IconStar"
         color="blue"
       />
@@ -129,4 +131,36 @@ const tabs = [
 ];
 
 const activeTab = ref("يومياً");
+
+// Data for each tab period
+const tabData = {
+  "يومياً": {
+    customers: { value: "127", sub: "عمليات اليوم", change: "+15.3%" },
+    verifications: { value: "127", sub: "عمليات اليوم", change: "+15.3%" },
+    offers: { value: "8", sub: "عرض نشط اليوم", change: "+2" },
+    rating: { value: "4.8", sub: "من أصل 5 نجوم", change: "+0.31" }
+  },
+  "أسبوعياً": {
+    customers: { value: "856", sub: "استخدموا الخصم هذا الأسبوع", change: "+18.2%" },
+    verifications: { value: "892", sub: "عمليات هذا الأسبوع", change: "+22.1%" },
+    offers: { value: "15", sub: "عرض نشط هذا الأسبوع", change: "+5" },
+    rating: { value: "4.7", sub: "من أصل 5 نجوم", change: "+0.15" }
+  },
+  "شهرياً": {
+    customers: { value: "1,247", sub: "استخدموا الخصم هذا الشهر", change: "+12.5%" },
+    verifications: { value: "3,542", sub: "عمليات هذا الشهر", change: "+8.7%" },
+    offers: { value: "24", sub: "عرض نشط حالياً", change: "+3" },
+    rating: { value: "4.8", sub: "من أصل 5 نجوم", change: "+0.31" }
+  }
+};
+
+// Computed property to get current stats based on active tab
+const statsData = computed(() => {
+  return {
+    customers: tabData[activeTab.value].customers,
+    verifications: tabData[activeTab.value].verifications,
+    offers: tabData[activeTab.value].offers,
+    rating: tabData[activeTab.value].rating
+  };
+});
 </script>
