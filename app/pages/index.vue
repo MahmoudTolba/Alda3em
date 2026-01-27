@@ -1,25 +1,27 @@
 <template>
   <div>
-    <div class="mb-8">
+    <div class="mb-8 text-right">
       <h1 class="text-2xl font-bold text-gray-800">لوحة التحكم</h1>
       <p class="text-gray-500">مرحباً بك، إليك نظرة عامة على أداء متجرك</p>
     </div>
 
-    <div class="bg-white p-2 rounded-xl border border-gray-100 inline-flex gap-2 mb-8">
+    <div class="flex justify-end mb-8">
+      <div class="bg-white p-2 rounded-xl border border-gray-100 inline-flex gap-2">
       <button
-        v-for="t in tabs"
-        :key="t"
+        v-for="tab in tabs"
+        :key="tab"
         type="button"
         class="px-6 py-2 rounded-lg transition"
         :class="
-          activeTab === t
+          activeTab === tab
             ? 'bg-blue-600 text-white shadow-sm'
             : 'text-gray-500 hover:bg-gray-50'
         "
-        @click="activeTab = t"
+        @click="activeTab = tab"
       >
-        {{ t }}
+        {{ tab }}
       </button>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -60,6 +62,7 @@
 </template>
 
 <script setup>
-const tabs = ["يومياً", "أسبوعياً", "شهرياً"];
+const tabs = ["شهرياً", "أسبوعياً", "يومياً"];
+
 const activeTab = ref("يومياً");
 </script>

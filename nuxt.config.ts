@@ -49,6 +49,9 @@ export default defineNuxtConfig({
       collections: ["mdi", "ph"],
     },
   },
+  vue: {
+    runtimeCompiler: true,
+  },
   build: {
     transpile: ["@fawmi/vue-google-maps"],
   },
