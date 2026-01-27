@@ -10,7 +10,7 @@
     <!-- Main -->
     <main class="flex-1 min-w-0 flex flex-col overflow-hidden">
       <!-- Header -->
-      <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-8 flex-shrink-0">
+      <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-8 lg:px-24 flex-shrink-0">
         <button
           @click="sidebarOpen = true"
           class="lg:hidden p-2 rounded-lg hover:bg-gray-100"

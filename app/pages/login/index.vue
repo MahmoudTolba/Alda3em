@@ -153,6 +153,11 @@
 <script setup>
 import { ref } from "vue";
 
+// Set page title
+useHead({
+  title: 'تسجيل الدخول'
+});
+
 definePageMeta({
   layout: false,
 });

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 sm:p-6 lg:p-10">
+  <div class=" m-8 py-6 px-16">
     <div class="mb-6 sm:mb-8 lg:mb-10 text-right">
       <h1 class="text-2xl sm:text-3xl font-bold text-[#0f172a] mb-2">لوحة التحكم</h1>
       <p class="text-sm sm:text-base text-[#64748b]">مرحباً بك، إليك نظرة عامة على أداء متجرك</p>
@@ -76,6 +76,11 @@
 </template>
 
 <script setup>
+// Set page title
+useHead({
+  title: 'لوحة التحكم'
+});
+
 // Define Icon Components
 const IconCalendar = defineComponent({
   template: `
