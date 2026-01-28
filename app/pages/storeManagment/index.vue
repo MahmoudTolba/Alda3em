@@ -47,7 +47,9 @@
               v-model="storeData.location"
               type="text"
               placeholder="أدخل موقع المتجر"
-              class="w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-2 sm:py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-right min-w-0"
+              readonly
+              @click="openMapModal"
+              class="w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-2 sm:py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-right min-w-0 cursor-pointer"
             />
             <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
               <svg
@@ -157,6 +159,16 @@
         حفظ التغييرات
       </button>
     </div>
+
+    <ClientOnly>
+      <MapModal
+        :show="showMapModal"
+        :initial-text="storeData.location"
+        :enabled="hasMapsKey"
+        @close="closeMapModal"
+        @confirm="handleLocationConfirm"
+      />
+    </ClientOnly>
   </div>
 </template>
 
@@ -181,6 +193,10 @@ const storeData = ref({
 
 // Store images - starts empty, only shows uploaded images
 const storeImages = ref([]);
+
+const showMapModal = ref(false);
+const { public: publicConfig } = useRuntimeConfig();
+const hasMapsKey = computed(() => Boolean(publicConfig.googleMapsApiKey));
 
 // Trigger file input
 const triggerFileInput = () => {
@@ -223,6 +239,19 @@ const processFiles = (files) => {
 // Remove image
 const removeImage = (index) => {
   storeImages.value.splice(index, 1);
+};
+
+const openMapModal = () => {
+  showMapModal.value = true;
+};
+
+const closeMapModal = () => {
+  showMapModal.value = false;
+};
+
+const handleLocationConfirm = (location) => {
+  storeData.value.location = location;
+  closeMapModal();
 };
 
 // Save store data

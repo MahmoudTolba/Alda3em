@@ -2,11 +2,11 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: process.env.NODE_ENV === "production" ? false : true },
-  // runtimeConfig: {
-  //   public: {
-  //     apiBase: "https://dashboard.sakanapp.com.sa/api/",
-  //   },
-  // },
+  runtimeConfig: {
+    public: {
+      googleMapsApiKey: "",
+    },
+  },
   app: {
     pageTransition: {
       name: "page",
