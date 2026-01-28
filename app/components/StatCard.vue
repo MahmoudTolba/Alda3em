@@ -1,7 +1,6 @@
 <template>
   <div
-    class="bg-white p-5 sm:p-7 rounded-xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)] border border-gray-100 flex items-start gap-3 sm:gap-4"
-    
+    class="bg-white p-4 sm:p-5 md:p-7 rounded-xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)] border border-gray-100 flex items-start gap-3 sm:gap-4 max-w-full overflow-hidden"
   >
     <div
       class="p-3 sm:p-4 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -10,11 +9,11 @@
       <component :is="iconComponent" class="w-6 h-6 sm:w-7 sm:h-7" />
     </div>
     <div class="text-right flex-1 flex flex-col items-end min-w-0">
-      <p class="text-[#8b93a7] text-sm font-medium mb-1">{{ title }}</p>
-      <h3 class="text-2xl sm:text-3xl font-bold text-[#1e293b] leading-tight">{{ value }}</h3>
-      <div class="flex flex-col items-end gap-1 mt-3 sm:mt-4">
-        <span class="text-[#94a3b8] text-xs font-medium">{{ sub }}</span>
-        <span v-if="change" class="text-[#22c55e] text-sm font-bold flex items-center gap-0.5">
+      <p class="text-[#8b93a7] text-xs sm:text-sm font-medium mb-1 break-words">{{ title }}</p>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#1e293b] leading-tight break-words">{{ value }}</h3>
+      <div class="flex flex-col items-end gap-1 mt-2 sm:mt-3 md:mt-4">
+        <span class="text-[#94a3b8] text-xs font-medium break-words">{{ sub }}</span>
+        <span v-if="change" class="text-[#22c55e] text-xs sm:text-sm font-bold flex items-center gap-0.5">
           {{ change }}
           <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
             <path d="M5 15l7-7 7 7" />

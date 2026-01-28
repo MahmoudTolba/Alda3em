@@ -1,13 +1,13 @@
 <template>
-  <div class=" m-8 py-6 px-16">
-    <div class="mb-6 sm:mb-8 lg:mb-10 text-right">
-      <h1 class="text-2xl sm:text-3xl font-bold text-[#0f172a] mb-2">لوحة التحكم</h1>
-      <p class="text-sm sm:text-base text-[#64748b]">مرحباً بك، إليك نظرة عامة على أداء متجرك</p>
+  <div class="m-4 sm:m-6 md:m-8 py-4 sm:py-6 px-4 sm:px-8 md:px-16 max-w-full overflow-x-hidden">
+    <div class="mb-4 sm:mb-6 md:mb-8 lg:mb-10 text-right">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#0f172a] mb-2 break-words">لوحة التحكم</h1>
+      <p class="text-xs sm:text-sm md:text-base text-[#64748b] break-words">مرحباً بك، إليك نظرة عامة على أداء متجرك</p>
     </div>
     <!-- start Tabs -->
-    <div class="mb-6 sm:mb-8">
-      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start p-3 sm:p-4 bg-white rounded-xl border border-gray-100 shadow-sm gap-3 sm:gap-0" dir="rtl">
-        <span class="text-sm font-medium text-gray-500 sm:ml-4 text-center sm:text-right whitespace-nowrap">
+    <div class="mb-4 sm:mb-6 md:mb-8">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start p-3 sm:p-4 bg-white rounded-xl border border-gray-100 shadow-sm gap-3 sm:gap-0 max-w-full overflow-hidden" dir="rtl">
+        <span class="text-xs sm:text-sm font-medium text-gray-500 sm:ml-4 text-center sm:text-right whitespace-nowrap">
           عرض عمليات التحقق:
         </span>
         <div class="flex p-1 rounded-lg gap-1.5 overflow-x-auto sm:overflow-visible -mx-1 sm:mx-0">

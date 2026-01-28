@@ -1,45 +1,45 @@
 <template>
-  <div class="m-8 py-6 px-16">
+  <div class="m-4 sm:m-6 md:m-8 py-4 sm:py-6 px-4 sm:px-8 md:px-16 max-w-full overflow-x-hidden">
     <!-- Page Header -->
-    <div class="mb-6 sm:mb-8 lg:mb-10 text-right">
-      <h1 class="text-2xl sm:text-3xl font-bold text-[#1E3A5F] mb-2">إدارة بيانات المتجر</h1>
-      <p class="text-sm sm:text-base text-[#64748b]">قم بتحديث معلومات متجرك وساعات العمل</p>
+    <div class="mb-4 sm:mb-6 md:mb-8 lg:mb-10 text-right">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#1E3A5F] mb-2 break-words">إدارة بيانات المتجر</h1>
+      <p class="text-xs sm:text-sm md:text-base text-[#64748b] break-words">قم بتحديث معلومات متجرك وساعات العمل</p>
     </div>
 
     <!-- Basic Information Section -->
-    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 sm:p-8 mb-6" dir="rtl">
-      <h2 class="text-xl font-bold text-[#1E3A5F] mb-6">المعلومات الأساسية</h2>
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 sm:p-6 md:p-8 mb-4 sm:mb-6 max-w-full overflow-hidden" dir="rtl">
+      <h2 class="text-lg sm:text-xl font-bold text-[#1E3A5F] mb-4 sm:mb-6 break-words">المعلومات الأساسية</h2>
       
-      <div class="space-y-6">
+      <div class="space-y-4 sm:space-y-6">
         <!-- Store Name -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">
+          <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2 break-words">
             اسم المتجر
           </label>
           <input
             v-model="storeData.name"
             type="text"
             placeholder="أدخل اسم المتجر"
-            class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-right"
+            class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-right min-w-0"
           />
         </div>
 
         <!-- Store Description -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">
+          <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2 break-words">
             وصف المتجر
           </label>
           <textarea
             v-model="storeData.description"
             rows="4"
             placeholder="أدخل وصف المتجر"
-            class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-right resize-none"
+            class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-right resize-none min-w-0"
           ></textarea>
         </div>
 
         <!-- Store Location -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">
+          <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2 break-words">
             موقع المتجر
           </label>
           <div class="relative">
@@ -47,7 +47,7 @@
               v-model="storeData.location"
               type="text"
               placeholder="أدخل موقع المتجر"
-              class="w-full pl-4 pr-12 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-right"
+              class="w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-2 sm:py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-right min-w-0"
             />
             <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
               <svg
@@ -76,11 +76,11 @@
       </div>
 
       <!-- Divider -->
-      <div class="border-t border-gray-200 my-8"></div>
+      <div class="border-t border-gray-200 my-6 sm:my-8"></div>
 
       <!-- Store Images Section -->
       <div>
-        <h2 class="text-xl font-bold text-[#1E3A5F] mb-6">صور المتجر</h2>
+        <h2 class="text-lg sm:text-xl font-bold text-[#1E3A5F] mb-4 sm:mb-6 break-words">صور المتجر</h2>
       
       <!-- Upload Area -->
       <div
@@ -88,7 +88,7 @@
         @dragover.prevent="isDragging = true"
         @dragleave.prevent="isDragging = false"
         @drop.prevent="handleDrop"
-        class="border-2 border-dashed rounded-xl p-8 sm:p-12 text-center cursor-pointer transition-colors mb-6"
+        class="border-2 border-dashed rounded-xl p-4 sm:p-8 md:p-12 text-center cursor-pointer transition-colors mb-4 sm:mb-6"
         :class="isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'"
       >
         <input
@@ -114,13 +114,13 @@
               d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
             />
           </svg>
-          <p class="text-gray-700 font-medium mb-2">اضغط لرفع الصور أو اسحبها هنا</p>
-          <p class="text-sm text-gray-500">PNG, JPG 10 MB</p>
+          <p class="text-sm sm:text-base text-gray-700 font-medium mb-2 break-words">اضغط لرفع الصور أو اسحبها هنا</p>
+          <p class="text-xs sm:text-sm text-gray-500">PNG, JPG 10 MB</p>
         </div>
       </div>
 
       <!-- Uploaded Images -->
-      <div v-if="storeImages.length > 0" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <div v-if="storeImages.length > 0" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
         <div
           v-for="(image, index) in storeImages"
           :key="index"
@@ -149,10 +149,10 @@
     </div>
 
     <!-- Save Button -->
-    <div class="mt-6 flex justify-end">
+    <div class="mt-4 sm:mt-6 flex justify-end">
       <button
         @click="saveStoreData"
-        class="px-6 py-3 bg-gradient-to-r from-[#4A90E2] to-[#357ABD] text-white font-medium rounded-xl shadow-md shadow-blue-100 transition duration-200 ease-out transform hover:from-[#3B7FCF] hover:to-[#2F6BB0] hover:shadow-lg hover:shadow-blue-200 hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.98]"
+        class="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-[#4A90E2] to-[#357ABD] text-white text-sm sm:text-base font-medium rounded-xl shadow-md shadow-blue-100 transition duration-200 ease-out transform hover:from-[#3B7FCF] hover:to-[#2F6BB0] hover:shadow-lg hover:shadow-blue-200 hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.98]"
       >
         حفظ التغييرات
       </button>

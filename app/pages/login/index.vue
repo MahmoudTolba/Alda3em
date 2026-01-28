@@ -16,10 +16,10 @@
           />
         </div>
 
-        <h1 class="text-3xl font-bold text-[#1e293b] mb-2">
+        <h1 class="text-2xl sm:text-3xl font-bold text-[#1e293b] mb-2 break-words">
           مرحباً بك
         </h1>
-        <p class="text-slate-400 text-sm">
+        <p class="text-slate-400 text-xs sm:text-sm break-words">
           سجل دخولك لإدارة متجرك
         </p>
       </div>
