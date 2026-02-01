@@ -313,8 +313,7 @@ const hasUnreadNotifications = computed(() => {
 // View all notifications
 const viewAllNotifications = () => {
   notificationMenuOpen.value = false;
-  // TODO: Navigate to notifications page
-  // navigateTo('/notifications');
+  navigateTo('/notifications');
 };
 
 // Handle click outside notification menu
@@ -442,6 +441,15 @@ const IconSettings = defineComponent({
   `,
 });
 
+const IconNotification = defineComponent({
+  template: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
+      <path d="M13.73 21a2 2 0 01-3.46 0" />
+    </svg>
+  `,
+});
+
 const IconLogout = defineComponent({
   template: `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -461,6 +469,7 @@ const menuItems = [
   { text: "التقييمات", to: "/ratings", icon: IconStar },
   { text: "إدارة الموظفين", to: "/employees", icon: IconUsers },
   { text: "التقارير", to: "/reports", icon: IconReport },
+  { text: "الإشعارات", to: "/notifications", icon: IconNotification },
   { text: "التواصل مع الإدارة", to: "/contact", icon: IconChat },
   { text: "الإعدادات", to: "/settings", icon: IconSettings },
 ];

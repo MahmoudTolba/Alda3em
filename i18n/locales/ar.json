@@ -5,5 +5,15 @@
   },
   "common": {
     "choose_language": "اختر لغة الموقع"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "unreadCount": "لديك {count} إشعار غير مقروء",
+    "deleteAll": "حذف الكل",
+    "delete": "حذف",
+    "markAsRead": "تحديد كمقروء",
+    "markAsUnread": "تحديد كغير مقروء",
+    "empty": "لا توجد إشعارات",
+    "emptyDesc": "سيتم إشعارك عند وصول تحديثات جديدة"
   }
 }

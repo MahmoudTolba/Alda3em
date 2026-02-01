@@ -5,5 +5,15 @@
   },
   "common": {
     "choose_language": "Choisissez la langue du site"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unreadCount": "Vous avez {count} notifications non lues",
+    "deleteAll": "Supprimer tout",
+    "delete": "Supprimer",
+    "markAsRead": "Marquer comme lu",
+    "markAsUnread": "Marquer comme non lu",
+    "empty": "Aucune notification",
+    "emptyDesc": "Vous serez informé lorsque de nouvelles mises à jour arriveront"
   }
 }

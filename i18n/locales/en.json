@@ -5,5 +5,15 @@
   },
   "common": {
     "choose_language": "Choose Site Language"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unreadCount": "You have {count} unread notifications",
+    "deleteAll": "Delete All",
+    "delete": "Delete",
+    "markAsRead": "Mark as read",
+    "markAsUnread": "Mark as unread",
+    "empty": "No notifications",
+    "emptyDesc": "You will be notified when new updates arrive"
   }
 }
