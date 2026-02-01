@@ -33,7 +33,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  // css: ["~/assets/css/main.scss"],
+  css: ["@/assets/css/global.css"],
   modules: [
     "@nuxtjs/i18n",
     "@primevue/nuxt-module",

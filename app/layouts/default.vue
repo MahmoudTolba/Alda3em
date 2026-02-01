@@ -46,107 +46,109 @@
             >
               م
             </div>
-          </div>
-          <div class="relative ml-auto">
-            <button
-              @click="notificationMenuOpen = !notificationMenuOpen"
-              class="relative cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              <span 
-                v-if="hasUnreadNotifications"
-                class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"
-              ></span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-6 h-6 text-gray-400"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+            <div class="relative">
+              <button
+                @click="notificationMenuOpen = !notificationMenuOpen"
+                class="relative cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
-                <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
-                <path d="M13.73 21a2 2 0 01-3.46 0" />
-              </svg>
-            </button>
-
-            <!-- Notification Menu Dropdown -->
-            <div
-              v-if="notificationMenuOpen"
-              ref="notificationMenuRef"
-              class="absolute right-0 top-full mt-2 w-[280px] max-w-[calc(100vw-3rem)] sm:w-80 md:w-96 bg-white rounded-xl shadow-lg border border-gray-200 z-50 max-h-[calc(100vh-5rem)] sm:max-h-96 overflow-hidden flex flex-col"
-              dir="rtl"
-            >
-              <!-- Header -->
-              <div class="p-3 sm:p-4 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
-                <h3 class="text-base sm:text-lg font-bold text-gray-800">الإشعارات</h3>
-                <button
-                  @click="markAllAsRead"
-                  class="text-xs sm:text-sm text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap"
+                <span 
+                  v-if="hasUnreadNotifications"
+                  class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"
+                ></span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6 text-gray-400"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 >
-                  تحديد الكل كمقروء
-                </button>
-              </div>
+                  <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
+                  <path d="M13.73 21a2 2 0 01-3.46 0" />
+                </svg>
+              </button>
 
-              <!-- Notifications List -->
-              <div class="overflow-y-auto flex-1">
-                <div v-if="notifications.length === 0" class="p-6 sm:p-8 text-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-300 mb-3 sm:mb-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+              <!-- Notification Menu Dropdown -->
+              <div
+                v-if="notificationMenuOpen"
+                ref="notificationMenuRef"
+                class="absolute right-0 top-full mt-2 w-[280px] max-w-[calc(100vw-3rem)] sm:w-80 md:w-96 bg-white rounded-xl shadow-lg border border-gray-200 z-50 max-h-[calc(100vh-5rem)] sm:max-h-96 overflow-hidden flex flex-col"
+                dir="rtl"
+              >
+                <!-- Header -->
+                <div class="p-3 sm:p-4 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
+                  <h3 class="text-base sm:text-lg font-bold text-gray-800">الإشعارات</h3>
+                  <button
+                    @click="markAllAsRead"
+                    class="text-xs sm:text-sm text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap"
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                    />
-                  </svg>
-                  <p class="text-gray-500 text-xs sm:text-sm">لا توجد إشعارات جديدة</p>
+                    تحديد الكل كمقروء
+                  </button>
                 </div>
-                <div v-else class="divide-y divide-gray-100">
-                  <div
-                    v-for="notification in notifications"
-                    :key="notification.id"
-                    @click="markAsRead(notification.id)"
-                    class="p-3 sm:p-4 hover:bg-gray-50 cursor-pointer transition-colors active:bg-gray-100"
-                    :class="{ 'bg-blue-50': !notification.read }"
-                  >
-                    <div class="flex items-start gap-3">
-                      <div
-                        class="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                        :class="notification.read ? 'bg-transparent' : 'bg-blue-600'"
-                      ></div>
-                      <div class="flex-1 min-w-0">
-                        <p class="text-sm sm:text-base font-medium text-gray-800 mb-1 break-words">
-                          {{ notification.title }}
-                        </p>
-                        <p class="text-xs sm:text-sm text-gray-500 mb-2 break-words">
-                          {{ notification.message }}
-                        </p>
-                        <p class="text-xs text-gray-400">
-                          {{ notification.time }}
-                        </p>
+
+                <!-- Notifications List -->
+                <div class="overflow-y-auto flex-1">
+                  <div v-if="notifications.length === 0" class="p-6 sm:p-8 text-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-300 mb-3 sm:mb-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                      />
+                    </svg>
+                    <p class="text-gray-500 text-xs sm:text-sm">لا توجد إشعارات جديدة</p>
+                  </div>
+                  <div v-else class="divide-y divide-gray-100">
+                    <div
+                      v-for="notification in notifications"
+                      :key="notification.id"
+                      @click="markAsRead(notification.id)"
+                      class="p-3 sm:p-4 hover:bg-gray-50 cursor-pointer transition-colors active:bg-gray-100"
+                      :class="{ 'bg-blue-50': !notification.read }"
+                    >
+                      <div class="flex items-start gap-3">
+                        <div
+                          class="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                          :class="notification.read ? 'bg-transparent' : 'bg-blue-600'"
+                        ></div>
+                        <div class="flex-1 min-w-0">
+                          <p class="text-sm sm:text-base font-medium text-gray-800 mb-1 break-words">
+                            {{ notification.title }}
+                          </p>
+                          <p class="text-xs sm:text-sm text-gray-500 mb-2 break-words">
+                            {{ notification.message }}
+                          </p>
+                          <p class="text-xs text-gray-400">
+                            {{ notification.time }}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Footer -->
-              <div v-if="notifications.length > 0" class="p-3 sm:p-4 border-t border-gray-200 text-center flex-shrink-0">
-                <button
-                  @click="viewAllNotifications"
-                  class="text-xs sm:text-sm text-blue-600 hover:text-blue-700 font-medium active:text-blue-800"
-                >
-                  عرض جميع الإشعارات
-                </button>
+                <!-- Footer -->
+                <div v-if="notifications.length > 0" class="p-3 sm:p-4 border-t border-gray-200 text-center flex-shrink-0">
+                  <button
+                    @click="viewAllNotifications"
+                    class="text-xs sm:text-sm text-blue-600 hover:text-blue-700 font-medium active:text-blue-800"
+                  >
+                    عرض جميع الإشعارات
+                  </button>
+                </div>
               </div>
             </div>
+
+          
           </div>
         </div>
       </header>
@@ -190,8 +192,8 @@
           class="flex flex-row-reverse items-center gap-3 p-3 rounded-lg transition"
           :class="
             route.path === item.to
-              ? 'bg-blue-600 text-white'
-              : 'text-gray-600 hover:bg-gray-100'
+              ? 'bg-[#357ABD] text-white'
+              : 'text-[#1E3A5F] hover:bg-gray-100'
           "
           @click="sidebarOpen = false"
         >

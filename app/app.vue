@@ -49,4 +49,5 @@ const title = computed(() => {
 :global(body) {
   font-family: "Tajawal", sans-serif;
 }
+
 </style>
