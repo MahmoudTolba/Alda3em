@@ -10,7 +10,7 @@
     <!-- Mobile Notification Menu Overlay -->
     <div
       v-if="notificationMenuOpen"
-      class="fixed inset-0 bg-black bg-opacity-30 z-40 sm:hidden"
+      class="fixed inset-0 bg-black bg-opacity-30 z-40 lg:hidden"
       @click="notificationMenuOpen = false"
     ></div>
 
@@ -46,9 +46,10 @@
             >
               م
             </div>
-            <div class="relative">
+            <div class="relative" ref="notificationContainer">
               <button
-                @click="notificationMenuOpen = !notificationMenuOpen"
+                ref="notificationButton"
+                @click="toggleNotificationMenu"
                 class="relative cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <span 
@@ -71,81 +72,105 @@
               </button>
 
               <!-- Notification Menu Dropdown -->
-              <div
-                v-if="notificationMenuOpen"
-                ref="notificationMenuRef"
-                class="absolute right-0 top-full mt-2 w-[280px] max-w-[calc(100vw-3rem)] sm:w-80 md:w-96 bg-white rounded-xl shadow-lg border border-gray-200 z-50 max-h-[calc(100vh-5rem)] sm:max-h-96 overflow-hidden flex flex-col"
-                dir="rtl"
+              <transition
+                enter-active-class="transition ease-out duration-200"
+                enter-from-class="opacity-0 scale-95"
+                enter-to-class="opacity-100 scale-100"
+                leave-active-class="transition ease-in duration-150"
+                leave-from-class="opacity-100 scale-100"
+                leave-to-class="opacity-0 scale-95"
               >
-                <!-- Header -->
-                <div class="p-3 sm:p-4 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
-                  <h3 class="text-base sm:text-lg font-bold text-gray-800">الإشعارات</h3>
-                  <button
-                    @click="markAllAsRead"
-                    class="text-xs sm:text-sm text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap"
-                  >
-                    تحديد الكل كمقروء
-                  </button>
-                </div>
-
-                <!-- Notifications List -->
-                <div class="overflow-y-auto flex-1">
-                  <div v-if="notifications.length === 0" class="p-6 sm:p-8 text-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-300 mb-3 sm:mb-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                      />
-                    </svg>
-                    <p class="text-gray-500 text-xs sm:text-sm">لا توجد إشعارات جديدة</p>
+                <div
+                  v-if="notificationMenuOpen"
+                  ref="notificationMenuRef"
+                  class="absolute left-0 top-full mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden"
+                  dir="rtl"
+                >
+                  <!-- Header -->
+                  <div class="px-4 py-3.5 bg-gradient-to-l from-blue-50 to-indigo-50 border-b border-gray-100">
+                    <div class="flex items-center justify-between gap-3">
+                      <h3 class="text-base font-bold text-gray-800 whitespace-nowrap">الإشعارات</h3>
+                      <button
+                        v-if="hasUnreadNotifications"
+                        @click.stop="markAllAsRead"
+                        class="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/50 whitespace-nowrap"
+                      >
+                        تحديد الكل كمقروء
+                      </button>
+                    </div>
                   </div>
-                  <div v-else class="divide-y divide-gray-100">
-                    <div
-                      v-for="notification in notifications"
-                      :key="notification.id"
-                      @click="markAsRead(notification.id)"
-                      class="p-3 sm:p-4 hover:bg-gray-50 cursor-pointer transition-colors active:bg-gray-100"
-                      :class="{ 'bg-blue-50': !notification.read }"
-                    >
-                      <div class="flex items-start gap-3">
-                        <div
-                          class="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                          :class="notification.read ? 'bg-transparent' : 'bg-blue-600'"
-                        ></div>
-                        <div class="flex-1 min-w-0">
-                          <p class="text-sm sm:text-base font-medium text-gray-800 mb-1 break-words">
-                            {{ notification.title }}
-                          </p>
-                          <p class="text-xs sm:text-sm text-gray-500 mb-2 break-words">
-                            {{ notification.message }}
-                          </p>
-                          <p class="text-xs text-gray-400">
-                            {{ notification.time }}
-                          </p>
+
+                  <!-- Notifications List -->
+                  <div class="max-h-[380px] overflow-y-auto notification-scroll">
+                    <div v-if="notifications.length === 0" class="py-16 px-6 text-center">
+                      <div class="w-20 h-20 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-10 h-10 text-gray-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                          />
+                        </svg>
+                      </div>
+                      <p class="text-gray-500 text-sm font-medium">لا توجد إشعارات جديدة</p>
+                      <p class="text-gray-400 text-xs mt-2">سيتم إشعارك عند وصول تحديثات جديدة</p>
+                    </div>
+                    <div v-else>
+                      <div
+                        v-for="notification in notifications"
+                        :key="notification.id"
+                        @click="markAsRead(notification.id)"
+                        class="px-4 py-3.5 hover:bg-gray-50/80 cursor-pointer transition-all duration-200 border-b border-gray-50 last:border-b-0 group"
+                        :class="!notification.read ? 'bg-blue-50/30' : ''"
+                      >
+                        <div class="flex items-start gap-3 w-full">
+                          <div class="flex-shrink-0 mt-1.5">
+                            <div
+                              class="w-2 h-2 rounded-full transition-all"
+                              :class="notification.read ? 'bg-gray-300 scale-75' : 'bg-blue-600 scale-100 ring-4 ring-blue-100'"
+                            ></div>
+                          </div>
+                          <div class="flex-1 min-w-0 overflow-hidden">
+                            <h4 class="text-sm font-semibold text-gray-900 mb-1 leading-tight break-words">
+                              {{ notification.title }}
+                            </h4>
+                            <p class="text-[13px] text-gray-600 leading-relaxed mb-2 break-words line-clamp-2">
+                              {{ notification.message }}
+                            </p>
+                            <div class="flex items-center gap-2">
+                              <span class="text-xs text-gray-400 font-medium">
+                                {{ notification.time }}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <!-- Footer -->
-                <div v-if="notifications.length > 0" class="p-3 sm:p-4 border-t border-gray-200 text-center flex-shrink-0">
-                  <button
-                    @click="viewAllNotifications"
-                    class="text-xs sm:text-sm text-blue-600 hover:text-blue-700 font-medium active:text-blue-800"
-                  >
-                    عرض جميع الإشعارات
-                  </button>
+                  <!-- Footer -->
+                  <div v-if="notifications.length > 0" class="px-4 py-3 bg-gray-50 border-t border-gray-100">
+                    <button
+                      @click="viewAllNotifications"
+                      class="w-full text-sm text-blue-600 hover:text-blue-700 font-semibold transition-colors py-2 rounded-lg hover:bg-blue-50/80"
+                    >
+                      <span class="flex items-center justify-center gap-1">
+                        <span>عرض جميع الإشعارات</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </transition>
             </div>
 
           
@@ -219,6 +244,9 @@
 const route = useRoute();
 const sidebarOpen = ref(false);
 const notificationMenuOpen = ref(false);
+const notificationMenuRef = ref(null);
+const notificationButton = ref(null);
+const notificationContainer = ref(null);
 
 // Close sidebar on route change (mobile)
 watch(() => route.path, () => {
@@ -257,6 +285,11 @@ const notifications = ref([
   }
 ]);
 
+// Toggle notification menu
+const toggleNotificationMenu = () => {
+  notificationMenuOpen.value = !notificationMenuOpen.value;
+};
+
 // Mark notification as read
 const markAsRead = (id) => {
   const notification = notifications.value.find(n => n.id === id);
@@ -277,43 +310,40 @@ const hasUnreadNotifications = computed(() => {
   return notifications.value.length > 0 && notifications.value.some(notification => !notification.read);
 });
 
-// View all notifications (you can navigate to a notifications page)
+// View all notifications
 const viewAllNotifications = () => {
   notificationMenuOpen.value = false;
   // TODO: Navigate to notifications page
-  // router.push('/notifications');
+  // navigateTo('/notifications');
 };
 
 // Handle click outside notification menu
-const notificationMenuRef = ref(null);
+const handleClickOutside = (event) => {
+  if (notificationContainer.value && !notificationContainer.value.contains(event.target)) {
+    notificationMenuOpen.value = false;
+  }
+};
 
-let clickOutsideHandler = null;
+// Handle escape key
+const handleEscapeKey = (event) => {
+  if (event.key === 'Escape' && notificationMenuOpen.value) {
+    notificationMenuOpen.value = false;
+  }
+};
 
-watch(notificationMenuOpen, (isOpen) => {
+// Setup event listeners
+onMounted(() => {
   if (process.client) {
-    if (isOpen) {
-      clickOutsideHandler = (event) => {
-        if (notificationMenuRef.value && 
-            !notificationMenuRef.value.contains(event.target) && 
-            !event.target.closest('button')) {
-          notificationMenuOpen.value = false;
-        }
-      };
-      setTimeout(() => {
-        document.addEventListener('click', clickOutsideHandler);
-      }, 0);
-    } else {
-      if (clickOutsideHandler) {
-        document.removeEventListener('click', clickOutsideHandler);
-        clickOutsideHandler = null;
-      }
-    }
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('keydown', handleEscapeKey);
   }
 });
 
+// Cleanup event listeners
 onUnmounted(() => {
-  if (process.client && clickOutsideHandler) {
-    document.removeEventListener('click', clickOutsideHandler);
+  if (process.client) {
+    document.removeEventListener('click', handleClickOutside);
+    document.removeEventListener('keydown', handleEscapeKey);
   }
 });
 
@@ -435,3 +465,67 @@ const menuItems = [
   { text: "الإعدادات", to: "/settings", icon: IconSettings },
 ];
 </script>
+
+<style scoped>
+/* Custom scrollbar for notifications */
+.notification-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.notification-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notification-scroll::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.notification-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.notification-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Line clamp for notification messages */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure RTL text displays properly */
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* Prevent text overflow */
+.break-words {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Ensure notification container doesn't overflow */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+</style>

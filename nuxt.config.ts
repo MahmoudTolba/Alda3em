@@ -31,6 +31,29 @@ export default defineNuxtConfig({
           charset: "utf-8",
         },
       ],
+      link: [
+        {
+          rel: "preload",
+          href: "/fonts/Tajawal/Tajawal-Regular.ttf",
+          as: "font",
+          type: "font/ttf",
+          crossorigin: "anonymous",
+        },
+        {
+          rel: "preload",
+          href: "/fonts/Tajawal/Tajawal-Bold.ttf",
+          as: "font",
+          type: "font/ttf",
+          crossorigin: "anonymous",
+        },
+        {
+          rel: "preload",
+          href: "/fonts/Tajawal/Tajawal-Medium.ttf",
+          as: "font",
+          type: "font/ttf",
+          crossorigin: "anonymous",
+        },
+      ],
     },
   },
   css: ["@/assets/css/global.css"],
@@ -42,7 +65,6 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxt/image",
     "@nuxt/icon",
-    "@nuxtjs/google-fonts",
   ],
   icon: {
     serverBundle: {
@@ -150,15 +172,5 @@ export default defineNuxtConfig({
         language: "tr",
       },
     ],
-  },
-  googleFonts: {
-    families: {
-      Tajawal: [400, 500, 700],
-    },
-    display: "swap",
-    prefetch: true,
-    preconnect: true,
-    preload: true,
-    useStylesheet: true,
   },
 });
