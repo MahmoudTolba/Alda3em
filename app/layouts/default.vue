@@ -222,7 +222,7 @@
           "
           @click="sidebarOpen = false"
         >
-          <component :is="item.icon" class="w-5 h-5" />
+          <component :is="item.icon" :is-active="route.path === item.to" />
           <span class="flex-1 text-right">{{ item.text }}</span>
         </NuxtLink>
       </nav>
@@ -347,31 +347,38 @@ onUnmounted(() => {
 });
 
 const IconDashboard = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="3" width="7" height="7" />
-      <rect x="14" y="3" width="7" height="7" />
-      <rect x="14" y="14" width="7" height="7" />
-      <rect x="3" y="14" width="7" height="7" />
-    </svg>
+    <img :src="isActive ? '/icons/sidebar/white-home.png' : '/icons/sidebar/dark-home.png'" alt="dashboard" class="w-4 h-4" />
   `,
 });
 
 const IconStore = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-      <path d="M9 22V12h6v10" />
-    </svg>
+    <img :src="isActive ? '/icons/sidebar/white-store.png' : '/icons/sidebar/dark-store.png'" alt="store" class="w-4 h-4" />
   `,
 });
 
 const IconTag = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
-      <line x1="7" y1="7" x2="7.01" y2="7" />
-    </svg>
+    <img :src="isActive ? '/icons/sidebar/white-offer.png' : '/icons/sidebar/dark-offer.png'" alt="offers" class="w-4 h-4" />
   `,
 });
 
@@ -469,7 +476,6 @@ const menuItems = [
   { text: "التقييمات", to: "/ratings", icon: IconStar },
   { text: "إدارة الموظفين", to: "/employees", icon: IconUsers },
   { text: "التقارير", to: "/reports", icon: IconReport },
-  { text: "الإشعارات", to: "/notifications", icon: IconNotification },
   { text: "التواصل مع الإدارة", to: "/contact", icon: IconChat },
   { text: "الإعدادات", to: "/settings", icon: IconSettings },
 ];

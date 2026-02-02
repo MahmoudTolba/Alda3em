@@ -1,55 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Tajawal Font Family */
 @font-face {
-  font-family: "Tajawal";
-  src: url("/fonts/Tajawal/Tajawal-ExtraLight.ttf") format("truetype");
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal/Tajawal-ExtraLight.ttf') format('truetype');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Tajawal";
-  src: url("/fonts/Tajawal/Tajawal-Light.ttf") format("truetype");
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal/Tajawal-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Tajawal";
-  src: url("/fonts/Tajawal/Tajawal-Regular.ttf") format("truetype");
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal/Tajawal-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Tajawal";
-  src: url("/fonts/Tajawal/Tajawal-Medium.ttf") format("truetype");
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal/Tajawal-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Tajawal";
-  src: url("/fonts/Tajawal/Tajawal-Bold.ttf") format("truetype");
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal/Tajawal-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Tajawal";
-  src: url("/fonts/Tajawal/Tajawal-ExtraBold.ttf") format("truetype");
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal/Tajawal-ExtraBold.ttf') format('truetype');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Tajawal";
-  src: url("/fonts/Tajawal/Tajawal-Black.ttf") format("truetype");
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal/Tajawal-Black.ttf') format('truetype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -74,3 +78,44 @@ body::-webkit-scrollbar,
   height: 0;
   background: transparent;
 }
+
+/* Page Transition Animations */
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.page-enter-to,
+.page-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Layout Transition */
+.layout-enter-active,
+.layout-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layout-enter-from,
+.layout-leave-to {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.layout-enter-to,
+.layout-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+

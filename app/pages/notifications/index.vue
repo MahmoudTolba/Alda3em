@@ -213,15 +213,8 @@
             <!-- Modal Content -->
             <div class="flex-1 flex flex-col justify-center items-center p-8 text-center">
               <!-- Warning Icon -->
-              <div class="w-20 h-20 mb-6 bg-red-100 rounded-full flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-10 h-10 text-red-500"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-                </svg>
+              <div class=" mb-6  rounded-full flex items-center justify-center w-full h-full">
+                <img src="/assets/icons/warning-circle.png" alt="delete" class="w-30 h-30 object-contain">
               </div>
 
               <!-- Title -->
