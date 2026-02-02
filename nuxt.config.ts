@@ -4,7 +4,13 @@ export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV === "production" ? false : true },
   runtimeConfig: {
     public: {
-      googleMapsApiKey: "",
+      // للحصول على Google Maps API Key:
+      // 1. اذهب إلى: https://console.cloud.google.com/
+      // 2. أنشئ مشروع جديد أو اختر مشروع موجود
+      // 3. فعّل Google Maps JavaScript API و Places API
+      // 4. أنشئ API Key من قسم Credentials
+      // 5. ضع API Key هنا أو في ملف .env بالشكل: NUXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_key_here
+      googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
     },
   },
   app: {

@@ -59,6 +59,22 @@
                <img src="/icons/sidebar/notifi.svg" alt="notification" class="w-6 h-6 " />
               </button>
 
+              <!-- Mobile Backdrop -->
+              <transition
+                enter-active-class="transition-opacity duration-200"
+                enter-from-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="transition-opacity duration-150"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+              >
+                <div
+                  v-if="notificationMenuOpen"
+                  @click="notificationMenuOpen = false"
+                  class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 sm:hidden"
+                ></div>
+              </transition>
+
               <!-- Notification Menu Dropdown -->
               <transition
                 enter-active-class="transition ease-out duration-200"
@@ -71,7 +87,7 @@
                 <div
                   v-if="notificationMenuOpen"
                   ref="notificationMenuRef"
-                  class="absolute left-0 top-full mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden"
+                  class="fixed sm:absolute left-4 right-4 sm:left-0 sm:right-auto top-16 sm:top-full mt-0 sm:mt-2 w-auto sm:w-96 max-w-[calc(100vw-2rem)] bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden"
                   dir="rtl"
                 >
                   <!-- Header -->
@@ -89,7 +105,7 @@
                   </div>
 
                   <!-- Notifications List -->
-                  <div class="max-h-[380px] overflow-y-auto notification-scroll">
+                  <div class="max-h-[60vh] sm:max-h-[380px] overflow-y-auto notification-scroll">
                     <div v-if="notifications.length === 0" class="py-16 px-6 text-center">
                       <div class="w-20 h-20 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                         <svg
@@ -133,7 +149,7 @@
                               {{ notification.message }}
                             </p>
                             <div class="flex items-center gap-2">
-                              <span class="text-xs text-gray-400 font-medium">
+                              <span class="text-xs text-black-400 font-medium">
                                 {{ notification.time }}
                               </span>
                             </div>
