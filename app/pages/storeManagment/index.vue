@@ -239,6 +239,11 @@
         @close="closeMapModal"
         @confirm="handleLocationConfirm"
       />
+      
+      <SuccessModal
+        v-model="showSuccessModal"
+        :title="successModalTitle"
+      />
     </ClientOnly>
   </div>
 </template>
@@ -277,6 +282,8 @@ const workingDays = ref([
 ]);
 
 const showMapModal = ref(false);
+const showSuccessModal = ref(false);
+const successModalTitle = ref('');
 const { public: publicConfig } = useRuntimeConfig();
 const hasMapsKey = computed(() => Boolean(publicConfig.googleMapsApiKey));
 
@@ -350,13 +357,19 @@ const saveStoreData = () => {
   console.log('Saving store data:', storeData.value);
   console.log('Store images:', storeImages.value);
   console.log('Working hours:', workingDays.value);
-  // You can add a success notification here
+  
+  // Show success modal
+  successModalTitle.value = 'تم ارسال التعديلات للادارة للمراجعة والاعتماد بنجاح';
+  showSuccessModal.value = true;
 };
 
 // Cancel changes
 const cancelChanges = () => {
   // TODO: Reset form or navigate away
   console.log('Changes cancelled');
-  // You can reload the original data or navigate to another page
+  
+  // Show cancel success modal
+  successModalTitle.value = 'تم الغاء حفظ التعديلات بنجاح';
+  showSuccessModal.value = true;
 };
 </script>
