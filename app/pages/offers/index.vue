@@ -93,7 +93,8 @@
                       class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       title="حذف"
                     >
-                      <Icon name="ph:trash" class="w-4 h-4 sm:w-5 sm:h-5" />
+                      <!-- <Icon name="ph:trash" class="w-4 h-4 sm:w-5 sm:h-5" /> -->
+                       <img src="/icons/del-img.png" alt="delete" class="w-3 h-3 sm:w-4 sm:h-4">
                     </button>
                   </div>
                 </td>
@@ -159,6 +160,19 @@
         </div>
       </div>
     </Teleport>
+
+    <!-- Add Offer Modal -->
+    <AddOfferModal
+      :show="showAddModal"
+      @close="closeAddModal"
+      @confirm="handleOfferConfirm"
+    />
+
+    <!-- Success Modal -->
+    <SuccessModal
+      v-model="showSuccessModal"
+      title="تم اضافة العرض بنجاح"
+    />
   </div>
 </template>
 
@@ -219,6 +233,8 @@ const offers = ref([
 
 // Modal state
 const showDeleteModal = ref(false);
+const showAddModal = ref(false);
+const showSuccessModal = ref(false);
 const selectedOffer = ref(null);
 
 // Get discount type badge class
@@ -234,8 +250,30 @@ const getDiscountTypeClass = (type) => {
 
 // Open add modal
 const openAddModal = () => {
-  // TODO: Implement add modal
-  console.log('Open add offer modal');
+  showAddModal.value = true;
+};
+
+// Close add modal
+const closeAddModal = () => {
+  showAddModal.value = false;
+};
+
+// Handle offer confirm
+const handleOfferConfirm = (offerData) => {
+  // Generate new ID
+  const newId = offers.value.length > 0 ? Math.max(...offers.value.map(o => o.id)) + 1 : 1;
+  
+  // Add new offer to the list
+  offers.value.unshift({
+    id: newId,
+    ...offerData
+  });
+  
+  // Close add modal
+  closeAddModal();
+  
+  // Show success modal
+  showSuccessModal.value = true;
 };
 
 // Edit offer
