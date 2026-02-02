@@ -150,6 +150,69 @@
       </div>
     </div>
 
+    <!-- Working Hours Section -->
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 sm:p-6 md:p-8 mb-4 sm:mb-6 max-w-full overflow-hidden" dir="rtl">
+      <h2 class="text-lg sm:text-xl font-bold text-[#1E3A5F] mb-4 sm:mb-6 break-words">ساعات العمل</h2>
+      
+      <div class="space-y-3 sm:space-y-4">
+        <div
+          v-for="day in workingDays"
+          :key="day.id"
+          class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"
+        >
+          <!-- Day Name -->
+          <div class="w-full sm:w-24 text-right">
+            <span class="text-sm sm:text-base font-medium text-gray-700">{{ day.name }}</span>
+          </div>
+
+          <!-- Time Inputs -->
+          <div v-if="!day.closed" class="flex-1 flex items-center gap-2 sm:gap-3 w-full">
+            <!-- From Label -->
+            <span class="text-xs sm:text-sm text-gray-600 whitespace-nowrap">من</span>
+            
+            <!-- From Time Input -->
+            <input
+              v-model="day.from"
+              type="time"
+              class="px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-center text-sm"
+            />
+
+            <!-- To Label -->
+            <span class="text-xs sm:text-sm text-gray-600 whitespace-nowrap">إلى</span>
+            
+            <!-- To Time Input -->
+            <input
+              v-model="day.to"
+              type="time"
+              class="px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-center text-sm"
+            />
+          </div>
+          <div v-else class="flex-1"></div>
+
+          <!-- Close/Open Button -->
+          <div class="flex items-center gap-2">
+            <button
+              v-if="!day.closed"
+              @click="toggleDayClosed(day.id)"
+              class="px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap bg-[#FEF2F2] text-[#EF4444] hover:bg-[#FEE2E2]"
+            >
+              إغلاق
+            </button>
+            
+            <template v-else>
+              <button
+                @click="toggleDayClosed(day.id)"
+                class="px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap bg-[#F0FDF4] text-[#22C55E] hover:bg-[#DCFCE7]"
+              >
+                فتح
+              </button>
+              <span class="text-sm font-medium text-[#EF4444] whitespace-nowrap">مغلق</span>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Save Button -->
     <div class="mt-4 sm:mt-6 flex justify-end">
       <button
@@ -193,6 +256,17 @@ const storeData = ref({
 
 // Store images - starts empty, only shows uploaded images
 const storeImages = ref([]);
+
+// Working hours data
+const workingDays = ref([
+  { id: 'saturday', name: 'السبت', from: '09:00', to: '22:00', closed: false },
+  { id: 'sunday', name: 'الأحد', from: '09:00', to: '22:00', closed: false },
+  { id: 'monday', name: 'الاثنين', from: '09:00', to: '22:00', closed: false },
+  { id: 'tuesday', name: 'الثلاثاء', from: '09:00', to: '22:00', closed: false },
+  { id: 'wednesday', name: 'الاربعاء', from: '09:00', to: '22:00', closed: false },
+  { id: 'thursday', name: 'الخميس', from: '09:00', to: '22:00', closed: false },
+  { id: 'friday', name: 'الجمعة', from: '09:00', to: '22:00', closed: false }
+]);
 
 const showMapModal = ref(false);
 const { public: publicConfig } = useRuntimeConfig();
@@ -241,6 +315,14 @@ const removeImage = (index) => {
   storeImages.value.splice(index, 1);
 };
 
+// Toggle day closed state
+const toggleDayClosed = (dayId) => {
+  const day = workingDays.value.find(d => d.id === dayId);
+  if (day) {
+    day.closed = !day.closed;
+  }
+};
+
 const openMapModal = () => {
   showMapModal.value = true;
 };
@@ -259,6 +341,7 @@ const saveStoreData = () => {
   // TODO: Implement API call to save store data
   console.log('Saving store data:', storeData.value);
   console.log('Store images:', storeImages.value);
+  console.log('Working hours:', workingDays.value);
   // You can add a success notification here
 };
 </script>

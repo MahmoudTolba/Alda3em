@@ -1,5 +1,6 @@
 <template>
-  <PageContainer>
+  <div>
+    <PageContainer>
     <div class="max-w-5xl mx-auto" dir="rtl">
       <!-- Header -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
@@ -253,43 +254,44 @@
       </div>
     </transition>
   </Teleport>
+  </div>
 </template>
 
 <script setup>
-import { ref, computed, defineComponent } from 'vue';
+import { ref, computed, defineComponent, markRaw } from 'vue';
 
-// Icons
-const IconUser = defineComponent({
+// Icons - wrapped with markRaw to prevent reactivity overhead
+const IconUser = markRaw(defineComponent({
   template: `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
     </svg>
   `
-});
+}));
 
-const IconStar = defineComponent({
+const IconStar = markRaw(defineComponent({
   template: `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
     </svg>
   `
-});
+}));
 
-const IconDiamond = defineComponent({
+const IconDiamond = markRaw(defineComponent({
   template: `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
     </svg>
   `
-});
+}));
 
-const IconRefresh = defineComponent({
+const IconRefresh = markRaw(defineComponent({
   template: `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
       <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
     </svg>
   `
-});
+}));
 
 // Notifications data
 const notifications = ref([
