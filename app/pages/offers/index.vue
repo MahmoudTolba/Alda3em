@@ -2,7 +2,15 @@
   <div class="m-4 sm:m-6 md:m-8 py-4 sm:py-6 px-4 sm:px-8 md:px-16 max-w-full overflow-x-hidden">
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-      <div class="flex-1 min-w-0 text-right">
+       <!-- Add New Offer Button -->
+       <button
+        @click="openAddModal"
+        class="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-[#2564EB] hover:bg-[#1D4ED8] text-white font-normal rounded-xl transition-colors whitespace-nowrap text-sm sm:text-base"
+      >
+      <span>إضافة عرض جديد</span>
+        <Icon name="ph:plus" class="w-5 h-5" />
+      </button>
+      <div class=" min-w-0 text-right">
         <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#1E3A5F] mb-1 sm:mb-2 break-words">
           إدارة العروض والخصومات
         </h1>
@@ -11,14 +19,7 @@
         </p>
       </div>
       
-      <!-- Add New Offer Button -->
-      <button
-        @click="openAddModal"
-        class="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors whitespace-nowrap text-sm sm:text-base"
-      >
-        <Icon name="ph:plus" class="w-5 h-5" />
-        <span>إضافة عرض جديد</span>
-      </button>
+     
     </div>
 
     <!-- Offers List Section -->
@@ -166,8 +167,10 @@ import { ref } from 'vue';
 
 // Page metadata
 definePageMeta({
-  title: 'offers',
   layout: 'default',
+});
+useHead({
+  title: ' العروض والخصومات',
 });
 
 // Offers data

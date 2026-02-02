@@ -158,7 +158,7 @@
         <div
           v-for="day in workingDays"
           :key="day.id"
-          class="flex flex-col sm:flex-row items-start bg-[#F9FAFB] rounded-lg p-2 sm:p-4 sm:items-center gap-3 sm:gap-4"
+          class="flex flex-col sm:flex-row items-start sm:items-center bg-[#F9FAFB] rounded-lg p-3 sm:p-4 gap-2 sm:gap-4"
         >
           <!-- Day Name -->
           <div class="w-full sm:w-24 text-right">
@@ -166,7 +166,7 @@
           </div>
 
           <!-- Time Inputs -->
-          <div v-if="!day.closed" class="flex-1 flex items-center gap-2 sm:gap-3 w-full">
+          <div v-if="!day.closed" class="flex-1 flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 w-full">
             <!-- From Label -->
             <span class="text-xs sm:text-sm text-gray-600 whitespace-nowrap">من</span>
             
@@ -174,7 +174,7 @@
             <input
               v-model="day.from"
               type="time"
-              class="px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-center text-sm"
+              class="flex-1 sm:flex-initial min-w-[100px] px-2 sm:px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-center text-sm"
             />
 
             <!-- To Label -->
@@ -184,17 +184,17 @@
             <input
               v-model="day.to"
               type="time"
-              class="px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-center text-sm"
+              class="flex-1 sm:flex-initial min-w-[100px] px-2 sm:px-3 py-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-center text-sm"
             />
           </div>
           <div v-else class="flex-1"></div>
 
           <!-- Close/Open Button -->
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 w-full sm:w-auto justify-end sm:justify-center text-center">
             <button
               v-if="!day.closed"
               @click="toggleDayClosed(day.id)"
-              class="px-4 py-2 rounded-lg   text-sm font-medium transition whitespace-nowrap bg-[#FEE2E2] text-[#EF4444] hover:bg-[#FEE2E2]"
+              class="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition whitespace-nowrap bg-[#FEE2E2] text-[#EF4444] hover:bg-[#FECACA]"
             >
               إغلاق
             </button>
@@ -202,11 +202,11 @@
             <template v-else>
               <button
                 @click="toggleDayClosed(day.id)"
-                class="px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap bg-[#F0FDF4] text-[#22C55E] hover:bg-[#DCFCE7]"
+                class="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition whitespace-nowrap bg-[#F0FDF4] text-[#22C55E] hover:bg-[#DCFCE7]"
               >
                 فتح
               </button>
-              <span class="text-sm font-medium text-[#EF4444] whitespace-nowrap">مغلق</span>
+              <span class="text-xs sm:text-sm font-medium text-[#EF4444] whitespace-nowrap">مغلق</span>
             </template>
           </div>
         </div>
@@ -349,6 +349,10 @@ const closeMapModal = () => {
 const handleLocationConfirm = (location) => {
   storeData.value.location = location;
   closeMapModal();
+  
+  // Show success modal
+  successModalTitle.value = 'تم تأكيد الموقع بنجاح';
+  showSuccessModal.value = true;
 };
 
 // Save store data
