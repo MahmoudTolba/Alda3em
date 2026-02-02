@@ -13,7 +13,7 @@
       </template>
     </Head>
 
-    <Body class="bg-[#F2F2F2] font-sans">
+    <Body class="bg-[#F2F2F2] font-tajawal">
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
@@ -46,8 +46,7 @@ const title = computed(() => {
     @apply flex-1;
   }
 }
-:global(body) {
-  font-family: "Tajawal", sans-serif;
-}
+
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 
 </style>

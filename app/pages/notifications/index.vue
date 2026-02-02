@@ -15,7 +15,7 @@
         <button
           v-if="notifications.length > 0"
           @click="confirmDeleteAll"
-          class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-red-500 hover:bg-red-600 text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap flex-shrink-0"
+          class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-red-500 hover:bg-red-600 text-white text-xs sm:text-sm font-normal rounded-lg transition-colors whitespace-nowrap flex-shrink-0"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -231,6 +231,13 @@
 
               <!-- Action Buttons -->
               <div class="flex gap-3 justify-center w-full max-w-md">
+                 <!-- Confirm Button -->
+                 <button
+                  @click="confirmDelete"
+                  class="flex-1 px-6 py-3 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-colors"
+                >
+                  تأكيد
+                </button>
                 <!-- Cancel Button -->
                 <button
                   @click="closeDeleteModal"
@@ -239,13 +246,7 @@
                   تراجع
                 </button>
 
-                <!-- Confirm Button -->
-                <button
-                  @click="confirmDelete"
-                  class="flex-1 px-6 py-3 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-colors"
-                >
-                  تأكيد
-                </button>
+               
               </div>
             </div>
           </div>
