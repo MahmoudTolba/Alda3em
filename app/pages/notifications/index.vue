@@ -188,13 +188,12 @@
         >
           <div
             v-if="showDeleteModal"
-            class="bg-white rounded-2xl shadow-2xl max-w-md w-full relative"
-            dir="rtl"
+            class="bg-white rounded-2xl shadow-2xl max-w-xl w-full relative h-[350px] flex flex-col"
           >
             <!-- Close Button -->
             <button
               @click="closeDeleteModal"
-              class="absolute top-4 left-4 text-red-500 hover:text-red-600 transition-colors z-10"
+              class="absolute top-4 right-4 text-red-500 hover:text-red-600 transition-colors z-10"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -212,9 +211,9 @@
             </button>
 
             <!-- Modal Content -->
-            <div class="p-8 text-center">
+            <div class="flex-1 flex flex-col justify-center items-center p-8 text-center">
               <!-- Warning Icon -->
-              <div class="w-20 h-20 mx-auto mb-6 bg-red-100 rounded-full flex items-center justify-center">
+              <div class="w-20 h-20 mb-6 bg-red-100 rounded-full flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="w-10 h-10 text-red-500"
@@ -226,12 +225,12 @@
               </div>
 
               <!-- Title -->
-              <h2 class="text-2xl font-bold text-gray-900 mb-4">
+              <h2 class="text-2xl font-bold text-gray-900 mb-8">
                 {{ deleteModalTitle }}
               </h2>
 
               <!-- Action Buttons -->
-              <div class="flex gap-3 justify-center">
+              <div class="flex gap-3 justify-center w-full max-w-md">
                 <!-- Cancel Button -->
                 <button
                   @click="closeDeleteModal"

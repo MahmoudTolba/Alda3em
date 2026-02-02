@@ -194,7 +194,7 @@
             <button
               v-if="!day.closed"
               @click="toggleDayClosed(day.id)"
-              class="px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap bg-[#FEF2F2] text-[#EF4444] hover:bg-[#FEE2E2]"
+              class="px-4 py-2 rounded-lg   text-sm font-medium transition whitespace-nowrap bg-[#FEF2F2] text-[#EF4444] hover:bg-[#FEE2E2]"
             >
               إغلاق
             </button>
