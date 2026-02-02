@@ -158,7 +158,7 @@
         <div
           v-for="day in workingDays"
           :key="day.id"
-          class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"
+          class="flex flex-col sm:flex-row items-start bg-[#F9FAFB] rounded-lg p-2 sm:p-4 sm:items-center gap-3 sm:gap-4"
         >
           <!-- Day Name -->
           <div class="w-full sm:w-24 text-right">
@@ -194,7 +194,7 @@
             <button
               v-if="!day.closed"
               @click="toggleDayClosed(day.id)"
-              class="px-4 py-2 rounded-lg   text-sm font-medium transition whitespace-nowrap bg-[#FEF2F2] text-[#EF4444] hover:bg-[#FEE2E2]"
+              class="px-4 py-2 rounded-lg   text-sm font-medium transition whitespace-nowrap bg-[#FEE2E2] text-[#EF4444] hover:bg-[#FEE2E2]"
             >
               إغلاق
             </button>
@@ -214,13 +214,21 @@
     </div>
 
     <!-- Save Button -->
-    <div class="mt-4 sm:mt-6 flex justify-end">
-      <button
-        @click="saveStoreData"
-        class="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-[#4A90E2] to-[#357ABD] text-white text-sm sm:text-base font-medium rounded-xl shadow-md shadow-blue-100 transition duration-200 ease-out transform hover:from-[#3B7FCF] hover:to-[#2F6BB0] hover:shadow-lg hover:shadow-blue-200 hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.98]"
-      >
-        حفظ التغييرات
-      </button>
+    <div class="mt-4 sm:mt-6">
+      <div class="flex gap-3" >
+        <button
+          @click="cancelChanges"
+          class="px-8 py-3.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors whitespace-nowrap"
+        >
+          إلغاء
+        </button>
+        <button
+          @click="saveStoreData"
+          class="flex-1 px-8 py-3.5 bg-[#4A8FD5] hover:bg-[#3B7FCF] text-white font-semibold rounded-lg transition-colors"
+        >
+          تحديث البيانات
+        </button>
+      </div>
     </div>
 
     <ClientOnly>
@@ -343,5 +351,12 @@ const saveStoreData = () => {
   console.log('Store images:', storeImages.value);
   console.log('Working hours:', workingDays.value);
   // You can add a success notification here
+};
+
+// Cancel changes
+const cancelChanges = () => {
+  // TODO: Reset form or navigate away
+  console.log('Changes cancelled');
+  // You can reload the original data or navigate to another page
 };
 </script>

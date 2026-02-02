@@ -56,19 +56,7 @@
                   v-if="hasUnreadNotifications"
                   class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"
                 ></span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6 text-gray-400"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
-                  <path d="M13.73 21a2 2 0 01-3.46 0" />
-                </svg>
+               <img src="/icons/sidebar/notifi.svg" alt="notification" class="w-6 h-6 " />
               </button>
 
               <!-- Notification Menu Dropdown -->
@@ -214,7 +202,7 @@
           v-for="item in menuItems"
           :key="item.to"
           :to="item.to"
-          class="flex flex-row-reverse items-center gap-3 p-3 rounded-lg transition"
+          class="flex flex-row-reverse items-center text-[16px] gap-3 p-3 rounded-lg transition"
           :class="
             route.path === item.to
               ? 'bg-[#357ABD] text-white'
@@ -383,87 +371,101 @@ const IconTag = defineComponent({
 });
 
 const IconCheck = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-      <path d="M22 4L12 14.01l-3-3" />
-    </svg>
+   <img :src="isActive ? '/icons/sidebar/white-verify.png' : '/icons/sidebar/dark-verify.png'" alt="verify" class="" />
   `,
 });
 
 const IconHistory = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 6v6l4 2" />
-    </svg>
+    <img :src="isActive ? '/icons/sidebar/white-history.png' : '/icons/sidebar/dark-history.png'" alt="history" class="w-4 h-4" />
   `,
 });
 
 const IconStar = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
+    <img :src="isActive ? '/icons/sidebar/white-ratings.png' : '/icons/sidebar/dark-ratings.png'" alt="rating" class="" />
   `,
 });
 
 const IconUsers = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
+    <img :src="isActive ? '/icons/sidebar/white-employes.png' : '/icons/sidebar/dark-employes.png'" alt="users" class="" />
   `,
 });
 
 const IconReport = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-      <path d="M14 2v6h6" />
-      <path d="M16 13H8" />
-      <path d="M16 17H8" />
-      <path d="M10 9H8" />
-    </svg>
+    <img :src="isActive ? '/icons/sidebar/white-reports.png' : '/icons/sidebar/dark-reports.png'" alt="report" class="" />
   `,
 });
 
 const IconChat = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-    </svg>
+    <img :src="isActive ? '/icons/sidebar/white-contact.png' : '/icons/sidebar/dark-contact.png'" alt="chat" class="" />
   `,
 });
 
 const IconSettings = defineComponent({
+  props: {
+    isActive: {
+      type: Boolean,
+      default: false
+    }
+  },
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="3" />
-      <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-    </svg>
+    <img :src="isActive ? '/icons/sidebar/white-settings.png' : '/icons/sidebar/dark-settings.png'" alt="settings" class="" />
   `,
 });
 
-const IconNotification = defineComponent({
-  template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
-      <path d="M13.73 21a2 2 0 01-3.46 0" />
-    </svg>
-  `,
-});
+// const IconNotification = defineComponent({
+//   template: `
+//     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+//       <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
+//       <path d="M13.73 21a2 2 0 01-3.46 0" />
+//     </svg>
+//   `,
+// });
 
 const IconLogout = defineComponent({
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-      <path d="M16 17l5-5-5-5" />
-      <path d="M21 12H9" />
-    </svg>
+    <img src="/icons/sidebar/logout-icon.png" alt="logout" class="" />
   `,
 });
 
@@ -482,27 +484,14 @@ const menuItems = [
 </script>
 
 <style scoped>
-/* Custom scrollbar for notifications */
+/* Hide scrollbar for notifications */
 .notification-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 #f8fafc;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 .notification-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.notification-scroll::-webkit-scrollbar-track {
-  background: #f8fafc;
-}
-
-.notification-scroll::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 10px;
-}
-
-.notification-scroll::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /* Line clamp for notification messages */
