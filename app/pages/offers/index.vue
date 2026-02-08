@@ -171,7 +171,7 @@
     <!-- Success Modal -->
     <SuccessModal
       v-model="showSuccessModal"
-      title="تم اضافة العرض بنجاح"
+      :title="successModalTitle"
     />
   </div>
 </template>
@@ -235,6 +235,7 @@ const offers = ref([
 const showDeleteModal = ref(false);
 const showAddModal = ref(false);
 const showSuccessModal = ref(false);
+const successModalTitle = ref('');
 const selectedOffer = ref(null);
 
 // Get discount type badge class
@@ -273,6 +274,7 @@ const handleOfferConfirm = (offerData) => {
   closeAddModal();
   
   // Show success modal
+  successModalTitle.value = 'تم اضافة العرض بنجاح';
   showSuccessModal.value = true;
 };
 
@@ -299,6 +301,10 @@ const confirmDelete = () => {
   if (selectedOffer.value) {
     offers.value = offers.value.filter(o => o.id !== selectedOffer.value.id);
     closeDeleteModal();
+    
+    // Show success modal
+    successModalTitle.value = 'تم حذف العرض بنجاح';
+    showSuccessModal.value = true;
   }
 };
 </script>

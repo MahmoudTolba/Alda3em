@@ -94,13 +94,14 @@
                   <div class="px-4 py-3.5 bg-gradient-to-l from-blue-50 to-indigo-50 border-b border-gray-100">
                     <div class="flex items-center justify-between gap-3">
                       <h3 class="text-base font-bold text-gray-800 whitespace-nowrap">الإشعارات</h3>
-                      <button
+                      <!-- <button
                         v-if="hasUnreadNotifications"
                         @click.stop="markAllAsRead"
                         class="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/50 whitespace-nowrap"
                       >
                         تحديد الكل كمقروء
-                      </button>
+                      </button> -->
+                      
                     </div>
                   </div>
 
