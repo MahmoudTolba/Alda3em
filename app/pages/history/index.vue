@@ -158,23 +158,23 @@
                 <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900 whitespace-nowrap">
                   <div class="flex items-center gap-2 justify-start">
                     <span
-                      class="w-15 h-15 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0"
+                      class="w-15 h-15 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0 object-contain p-2"
                       aria-hidden="true"
                     >
-                      <Icon name="ph:user" class="w-9 h-9" />
+                      <img src="/icons/sidebar/user1.svg" alt="user" class="w-4 h-4 object-contain">
                     </span>
-                    <span>{{ op.customerName }}</span>
+                    <span class="text-[#1E3A5F] text-md font-medium">{{ op.customerName }}</span>
                   </div>
                 </td>
                 <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600 whitespace-nowrap">
-                  {{ op.membershipNumber }}
+                  <span class="text-[#374151] text-md font-medium">{{ op.membershipNumber }}</span>
                 </td>
                 <td class="px-3 sm:px-6 py-3 sm:py-4 text-base sm:text-base whitespace-nowrap">
                   <span
                     class="inline-flex px-2 sm:px-3 py-1 rounded-full text-base font-medium"
                     :class="getMembershipTypeClass(op.membershipType)"
                   >
-                    {{ op.membershipType }}
+                    <span class="text-[#1E3A5F] text-md font-normal">{{ op.membershipType }}</span>
                   </span>
                 </td>
                 <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600 whitespace-nowrap">
@@ -184,7 +184,7 @@
                   {{ op.amountBefore }}
                 </td>
                 <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm whitespace-nowrap">
-                  <span class="font-bold text-blue-600">{{ op.discountPercent }}%</span>
+                  <span class="font-bold text-2xl text-[#2564EB]">{{ op.discountPercent }}%</span>
                 </td>
                 <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm whitespace-nowrap">
                   <span class="font-medium text-green-600">{{ op.amountAfter }}</span>
