@@ -53,7 +53,7 @@
                 class="relative cursor-pointer p-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <span 
-                  v-if="hasUnreadNotifications"
+                  v-if="hasUnreadNotifications>0 && !notificationMenuOpen"
                   class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white"
                 ></span>
                <img src="/icons/sidebar/notifi.svg" alt="notification" class="w-6 h-6 " />

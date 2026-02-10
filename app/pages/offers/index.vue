@@ -60,7 +60,7 @@
                   {{ offer.name }}
                 </td>
                 <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm whitespace-nowrap">
-                  <span class="font-bold text-blue-600">{{ offer.discount }}%</span>
+                  <span class="font-bold text-blue-600 text-2xl">{{ offer.discount }}%</span>
                 </td>
                 <td class="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm whitespace-nowrap">
                   <span 
@@ -164,6 +164,8 @@
     <!-- Add Offer Modal -->
     <AddOfferModal
       :show="showAddModal"
+      :is-edit-mode="isEditMode"
+      :offer-data="offerToEdit"
       @close="closeAddModal"
       @confirm="handleOfferConfirm"
     />
@@ -209,7 +211,7 @@ const offers = ref([
     id: 3,
     name: 'عرض العملاء المميزين',
     discount: 35,
-    type: 'برونزية',
+    type: 'بلاتينية',
     startDate: '2024-01-01',
     endDate: '2024-12-31'
   },
@@ -237,13 +239,15 @@ const showAddModal = ref(false);
 const showSuccessModal = ref(false);
 const successModalTitle = ref('');
 const selectedOffer = ref(null);
+const isEditMode = ref(false);
+const offerToEdit = ref(null);
 
 // Get discount type badge class
 const getDiscountTypeClass = (type) => {
   const classes = {
     'ذهبية': 'bg-yellow-100 text-yellow-800',
     'فضية': 'bg-gray-100 text-gray-800',
-    'برونزية': 'bg-orange-100 text-orange-800',
+    'بلاتينيه': 'bg-orange-100 text-orange-800',
     'الكل': 'bg-blue-100 text-blue-800'
   };
   return classes[type] || 'bg-gray-100 text-gray-800';
@@ -251,37 +255,57 @@ const getDiscountTypeClass = (type) => {
 
 // Open add modal
 const openAddModal = () => {
+  isEditMode.value = false;
+  offerToEdit.value = null;
   showAddModal.value = true;
 };
 
 // Close add modal
 const closeAddModal = () => {
   showAddModal.value = false;
+  isEditMode.value = false;
+  offerToEdit.value = null;
 };
 
 // Handle offer confirm
 const handleOfferConfirm = (offerData) => {
-  // Generate new ID
-  const newId = offers.value.length > 0 ? Math.max(...offers.value.map(o => o.id)) + 1 : 1;
-  
-  // Add new offer to the list
-  offers.value.unshift({
-    id: newId,
-    ...offerData
-  });
+  if (isEditMode.value && offerToEdit.value) {
+    // Edit existing offer
+    const index = offers.value.findIndex(o => o.id === offerToEdit.value.id);
+    if (index !== -1) {
+      offers.value[index] = {
+        ...offers.value[index],
+        ...offerData
+      };
+    }
+    
+    // Show success modal
+    successModalTitle.value = 'تم تعديل العرض بنجاح';
+  } else {
+    // Add new offer
+    const newId = offers.value.length > 0 ? Math.max(...offers.value.map(o => o.id)) + 1 : 1;
+    
+    offers.value.unshift({
+      id: newId,
+      ...offerData
+    });
+    
+    // Show success modal
+    successModalTitle.value = 'تم اضافة العرض بنجاح';
+  }
   
   // Close add modal
   closeAddModal();
   
   // Show success modal
-  successModalTitle.value = 'تم اضافة العرض بنجاح';
   showSuccessModal.value = true;
 };
 
 // Edit offer
 const editOffer = (offer) => {
-  // TODO: Implement edit functionality
-  console.log('Edit offer:', offer);
+  isEditMode.value = true;
+  offerToEdit.value = { ...offer };
+  showAddModal.value = true;
 };
 
 // Open delete modal

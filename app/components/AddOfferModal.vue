@@ -7,12 +7,12 @@
     >
       <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
         <!-- Header -->
-        <div class="sticky top-0 bg-white border-b border-gray-200 p-4 sm:p-6 rounded-t-2xl z-10" dir="rtl">
+        <div class="sticky top-0 bg-white  p-4 sm:p-6 rounded-t-2xl z-10" dir="rtl">
           <div class="flex items-center justify-between">
-            <h2 class="text-xl sm:text-2xl font-bold text-blue-600">إضافة العرض</h2>
+           
             <button
               @click="handleClose"
-              class="text-red-500 hover:text-red-600 transition-colors"
+              class="text-red-500 hover:text-red-600 transition-colors cursor-pointer hover:scale-110"
               aria-label="Close"
             >
               <Icon name="ph:x" class="w-6 h-6" />
@@ -22,6 +22,9 @@
 
         <!-- Form -->
         <form @submit.prevent="handleSubmit" class="p-4 sm:p-6 space-y-4" dir="rtl">
+          <h2 class="text-xl sm:text-2xl font-bold text-blue-600 text-center">
+              {{ isEditMode ? 'تعديل العرض' : 'إضافة العرض' }}
+            </h2>
           <!-- Offer Name -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2 text-right">
@@ -134,7 +137,7 @@
               type="submit"
               class="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
             >
-              إضافة العرض
+              {{ isEditMode ? 'حفظ التعديلات' : 'إضافة العرض' }}
             </button>
           </div>
         </form>
@@ -148,6 +151,14 @@ const props = defineProps({
   show: {
     type: Boolean,
     required: true
+  },
+  offerData: {
+    type: Object,
+    default: null
+  },
+  isEditMode: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -194,7 +205,18 @@ const resetForm = () => {
 watch(
   () => props.show,
   (isOpen) => {
-    if (!isOpen) {
+    if (isOpen && props.isEditMode && props.offerData) {
+      // Fill form with offer data for editing
+      formData.value = {
+        name: props.offerData.name || '',
+        discount: props.offerData.discount || null,
+        type: props.offerData.type || '',
+        startDate: props.offerData.startDate || '',
+        endDate: props.offerData.endDate || '',
+        conditions: props.offerData.conditions || '',
+        notes: props.offerData.notes || ''
+      };
+    } else if (!isOpen) {
       resetForm();
     }
   }
